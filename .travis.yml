@@ -1,0 +1,30 @@
+language: java
+sudo: false
+jdk: oraclejdk8
+install: true
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+addons:
+    sonarcloud:
+        organization: "olszewskimichal-github"
+        token:
+          secure: ${SONAR_TOKEN}
+script:
+
+jobs:
+  include:
+    - stage: unit
+      script:
+      - mvn test -P unit-testing
+    - stage: integration
+     script:
+     - mvn test -P integration-testing
+    - stage: sonar
+    script:
+          - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
+    after_success:
+       - bash <(curl -s https://codecov.io/bash)
