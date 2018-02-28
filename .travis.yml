@@ -1,26 +1,29 @@
 language: java
 sudo: false
 jdk: oraclejdk8
-install: true
+dist: trusty
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
+  - .autoconf
+  - $HOME/.m2
+  - $HOME/.sonar/cache
 
 addons:
     sonarcloud:
         organization: "olszewskimichal-github"
         token:
           secure: ${SONAR_TOKEN}
+        branches:
+          - master
+          - develop
+script:
+    - sonar-scanner
 
 jobs:
   include:
-    - stage: unit
-    script: mvn test -P unit-testing
-    - stage: integration
-    script: mvn test -P integration-testing
-    - stage: sonar
-    script: mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
-    after_success:
+    - stage: test
+      script:
+        - mvn test sonar:sonar -Dsonar.coverage.exclusions=**/pl/michal/olszewski/rssaggregator/config/** -B
+      after_success:
        - bash <(curl -s https://codecov.io/bash)
