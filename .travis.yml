@@ -16,8 +16,14 @@ addons:
           secure: ${SONAR_TOKEN}
 jobs:
   include:
-    - stage: test
+    - stage: unit
       script:
-        - mvn test sonar:sonar -B
+        - mvn test -P unit-testing -B
+    - stage: integration
+      script:
+        - mvn test -P integration-testing -B
+    - stage: sonar
+      script:
+        - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
       after_success:
        - bash <(curl -s https://codecov.io/bash)
