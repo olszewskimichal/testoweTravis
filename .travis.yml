@@ -14,16 +14,10 @@ addons:
         organization: "olszewskimichal-github"
         token:
           secure: ${SONAR_TOKEN}
-        branches:
-          - master
-          - develop
-script:
-    - sonar-scanner
-
 jobs:
   include:
     - stage: test
       script:
-        - mvn test sonar:sonar -Dsonar.coverage.exclusions=**/pl/michal/olszewski/rssaggregator/config/** -B
+        - mvn test sonar:sonar -B
       after_success:
        - bash <(curl -s https://codecov.io/bash)
