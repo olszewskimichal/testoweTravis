@@ -13,7 +13,6 @@ addons:
         organization: "olszewskimichal-github"
         token:
           secure: ${SONAR_TOKEN}
-script:
 
 jobs:
   include:
