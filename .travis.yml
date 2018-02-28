@@ -18,13 +18,10 @@ script:
 jobs:
   include:
     - stage: unit
-      script:
-      - mvn test -P unit-testing
+    script: mvn test -P unit-testing
     - stage: integration
-     script:
-     - mvn test -P integration-testing
+    script: mvn test -P integration-testing
     - stage: sonar
-    script:
-          - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
+    script: mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
     after_success:
        - bash <(curl -s https://codecov.io/bash)
