@@ -24,6 +24,7 @@ jobs:
         - mvn test -P integration-testing -B
     - stage: sonar
       script:
-        - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
+        - sonar-scanner
+        - mvn test org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -B
       after_success:
        - bash <(curl -s https://codecov.io/bash)
