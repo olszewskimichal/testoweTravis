@@ -22,7 +22,7 @@ jobs:
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - name: integration
-      if: branch = master || branch = develop
+      if: branch in (master,develop)
       script:
         - mvn test -P integration-testing -B
 
