@@ -19,9 +19,8 @@ jobs:
     - stage: unit
       script:
         - mvn test -P unit-testing sonar:sonar -B
-     after_success:
+      after_success:
         - bash <(curl -s https://codecov.io/bash)
-    if: branch = master
     - stage: integration
       script:
         - mvn test -P integration-testing -B
