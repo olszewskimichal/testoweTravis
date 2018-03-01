@@ -11,7 +11,7 @@ cache:
 
 addons:
     sonarcloud:
-        organization: "testtravis"
+        organization: "demodemodemo"
         token:
           secure: ${SONAR_TOKEN}
 jobs:
