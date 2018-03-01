@@ -16,12 +16,13 @@ addons:
           secure: ${SONAR_TOKEN}
 jobs:
   include:
-    - stage: unit
+    - name: unit
       script:
         - mvn test -P unit-testing sonar:sonar -B
       after_success:
         - bash <(curl -s https://codecov.io/bash)
-    - stage: integration
+    - name: integration
+      if: branch = master
       script:
         - mvn test -P integration-testing -B
 
